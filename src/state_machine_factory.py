@@ -16,12 +16,3 @@ class StateMachineFactory:
         if not state_machine:
             raise ValueError(pattern)
         return state_machine()
-
-
-factory = StateMachineFactory()
-temporal = factory.get_state_machine("temporal")
-saga = factory.get_state_machine("saga")
-state = factory.get_state_machine("state")
-
-create_vnf_request = {}
-response_code, vnf_instance = temporal.request_create_vnf(create_vnf_request)
