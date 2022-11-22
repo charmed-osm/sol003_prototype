@@ -5,15 +5,23 @@ from temporalio.client import Client
 
 from request_create_vnf import RequestCreateVnf
 from request_instantiate_vnf import RequestInstantiateVnf
+from CreateVnfRequest import CreateVnfRequest
 
 async def main():
     # Create client connected to server at the given address
     client = await Client.connect("localhost:7233")
 
     # Execute a workflow
+    createVnfRequest = CreateVnfRequest(
+        vnfdId="VNFD_UUID",
+        vnfInstanceName="My new Instance",
+        vnfInstanceDescription="A VNF that I am creating",
+        metadata={}
+    )
+
     result = await client.execute_workflow(
         RequestCreateVnf.run,
-        "my name",
+        createVnfRequest,
         id="RequestInstantiateVnf",
         task_queue="lcm-task-queue")
 
