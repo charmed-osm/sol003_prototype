@@ -1,6 +1,8 @@
+from dataclasses import dataclass
 
+@dataclass
 class CreateVnfRequest:
-    vnfdId: str
-    vnfInstanceName: str
-    vnfInstanceDescription: str
-    metadata: dict
+    vnfdId: str = None
+    vnfInstanceName: str = None
+    vnfInstanceDescription: str = None
+    metadata: dict = None

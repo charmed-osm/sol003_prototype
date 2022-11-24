@@ -1,17 +1,20 @@
+from dataclasses import dataclass
+
+@dataclass
 class InstantiatedVnfInfo:
-    flavourId: str       # SOL002SOL003_def.yaml#/definitions/IdentifierInVnfd
-    vnfState: str        # SOL002SOL003VNFLifecycleManagement_def.yaml#/definitions/VnfOperationalStateType
-    scaleStatus: list    # SOL002SOL003VNFLifecycleManagement_def.yaml#/definitions/ScaleInfo
-    maxScaleLevels: list # SOL002SOL003VNFLifecycleManagement_def.yaml#/definitions/ScaleInfo
-    extCpInfo: list      # SOL002SOL003VNFLifecycleManagement_def.yaml#/definitions/VnfExtCpInfo
-    vipCpInfo: list      # SOL002SOL003VNFLifecycleManagement_def.yaml#/definitions/VipCpInfo
-    extVirtualLinkInfo: list         # SOL002SOL003VNFLifecycleManagement_def.yaml#/definitions/ExtVirtualLinkInfo
-    extManagedVirtualLinkInfo: list  # definitions/ExtManagedVirtualLinkInfo
-    monitoringParameters: list       # SOL002SOL003VNFLifecycleManagement_def.yaml#/definitions/MonitoringParameter
-    localizationLanguage: str
-    vnfcResourceInfo: list           # definitions/VnfcResourceInfo
-    vnfVirtualLinkResourceInfo: list # definitions/VnfVirtualLinkResourceInfo
-    virtualStorageResourceInfo: list # definitions/VirtualStorageResourceInfo
+    flavourId: str = ""       # SOL002SOL003_def.yaml#/definitions/IdentifierInVnfd
+    vnfState: str = ""        # SOL002SOL003VNFLifecycleManagement_def.yaml#/definitions/VnfOperationalStateType
+    scaleStatus: list = None    # SOL002SOL003VNFLifecycleManagement_def.yaml#/definitions/ScaleInfo
+    maxScaleLevels: list = None # SOL002SOL003VNFLifecycleManagement_def.yaml#/definitions/ScaleInfo
+    extCpInfo: list = None      # SOL002SOL003VNFLifecycleManagement_def.yaml#/definitions/VnfExtCpInfo
+    vipCpInfo: list = None      # SOL002SOL003VNFLifecycleManagement_def.yaml#/definitions/VipCpInfo
+    extVirtualLinkInfo: list = None         # SOL002SOL003VNFLifecycleManagement_def.yaml#/definitions/ExtVirtualLinkInfo
+    extManagedVirtualLinkInfo: list = None  # definitions/ExtManagedVirtualLinkInfo
+    monitoringParameters: list = None       # SOL002SOL003VNFLifecycleManagement_def.yaml#/definitions/MonitoringParameter
+    localizationLanguage: str = ""
+    vnfcResourceInfo: list = None           # definitions/VnfcResourceInfo
+    vnfVirtualLinkResourceInfo: list = None # definitions/VnfVirtualLinkResourceInfo
+    virtualStorageResourceInfo: list = None # definitions/VirtualStorageResourceInfo
 
 
 '''
@@ -56,19 +59,20 @@ class InstantiatedVnfInfo:
       - instantiationState
 '''
 
+@dataclass
 class VnfInstance:
-    id: str
-    vnfInstanceName: str
-    vnfInstanceDescription: str
-    vnfdId: str
-    vnfProvider: str
-    vnfProductName: str
-    vnfSoftwareVersion: str
-    vnfdVersion: str
-    vnfConfigurableProperties: dict
-    vimConnectionInfo: str #?
-    instantiationState: str # Should be an Enum
-    instantiatedVnfInfo: InstantiatedVnfInfo
-    metadata: dict
+    id: str = ""
+    vnfInstanceName: str = ""
+    vnfInstanceDescription: str = ""
+    vnfdId: str = ""
+    vnfProvider: str = ""
+    vnfProductName: str = ""
+    vnfSoftwareVersion: str = ""
+    vnfdVersion: str = ""
+    vnfConfigurableProperties: dict = None
+    vimConnectionInfo: str = ""   #?
+    instantiationState: str = "" # Should be an Enum
+    instantiatedVnfInfo: InstantiatedVnfInfo = None
+    metadata: dict = None
     # extensions: dict #? Need to look into this
 

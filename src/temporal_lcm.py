@@ -6,8 +6,8 @@ from temporalio import workflow, activity
 from temporalio.client import Client
 from temporalio.worker import Worker
 
-from request_create_vnf import RequestCreateVnf, request_create_vnf
-from request_instantiate_vnf import RequestInstantiateVnf, request_instantiate_vnf
+from temporal.request_create_vnf import RequestCreateVnf, request_create_vnf
+from temporal.request_instantiate_vnf import RequestInstantiateVnf, request_instantiate_vnf
 
 async def main():
     # Create client connected to server at the given address

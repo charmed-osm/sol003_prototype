@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 
+from CreateVnfRequest import CreateVnfRequest
+from VnfInstance import VnfInstance
 
 class StateMachine(ABC):
     """
@@ -7,15 +9,14 @@ class StateMachine(ABC):
     """
 
     @abstractmethod
-    def request_create_vnf(self, create_vnf_request: dict) -> (str, dict):
+    def request_create_vnf(self, create_vnf_request: CreateVnfRequest) -> VnfInstance:
         """
 
         Args:
             create_vnf_request: VNF creation parameters (5.5.2.3).
 
         Returns:
-            str: Response code.
-            dict: VNF instance (5.5.2.2).
+            VnfInstance: VNF instance (5.5.2.2).
         """
 
     @abstractmethod
