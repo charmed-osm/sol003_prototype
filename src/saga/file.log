@@ -1,0 +1,7 @@
+2022-11-25 13:44:14,908:DEBUG:asyncio:Using selector: EpollSelector
+2022-11-25 13:44:45,660:DEBUG:asyncio:Using selector: EpollSelector
+2022-11-25 13:44:45,662:DEBUG:root:VnfInstance: {'id': '2323234'}
+2022-11-25 13:44:45,662:DEBUG:root:VnfLcmOppOccs: {'id': '6876776', 'operationState': <property object at 0x7f8751322220>}
+2022-11-25 13:45:37,483:DEBUG:asyncio:Using selector: EpollSelector
+2022-11-25 13:45:37,485:DEBUG:root:VnfInstance:
+2022-11-25 13:45:37,485:DEBUG:root:VnfLcmOppOccs:
