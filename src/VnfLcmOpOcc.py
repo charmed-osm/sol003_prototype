@@ -1,9 +1,10 @@
 from dataclasses import dataclass
 
 
+@dataclass
 class VnfLcmOpOccs:  # 5.5.2.13, page 131
-    stateEnteredTime: float = None
-    startTime: float = None
+    stateEnteredTime: str = None
+    startTime: str = None
     vnfInstanceId: str = None
     grantId: str = None
     operation: str = None
@@ -12,14 +13,5 @@ class VnfLcmOpOccs:  # 5.5.2.13, page 131
     isCancelPending: bool = None
     cancelMode: str = None
     error: str = None
-    operationState: str = "SUCCESS"
-    id: str = "lcm_opp_id"
-
-    @property
-    def operationState(self) -> str:
-        return self._operationState
-
-    @operationState.setter
-    def operationState(self, value: str) -> None:
-        self._operationState = value
-#
+    operationState: str = None
+    id: str = None

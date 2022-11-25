@@ -1,14 +1,14 @@
-from state_machine import StateMachine
+from src.state_machine import StateMachine
 
 import asyncio
 from temporalio.client import Client
 
 # Import the workflow from the external interface
 
-from temporal.request_create_vnf import RequestCreateVnf
-from temporal.request_instantiate_vnf import RequestInstantiateVnf
-from CreateVnfRequest import CreateVnfRequest
-from VnfInstance import VnfInstance
+from src.temporal.request_create_vnf import RequestCreateVnf
+from src.temporal.request_instantiate_vnf import RequestInstantiateVnf
+from src.CreateVnfRequest import CreateVnfRequest
+from src.VnfInstance import VnfInstance
 class TemporalStateMachine(StateMachine):
 
     def request_create_vnf(self, create_vnf_request: CreateVnfRequest) -> VnfInstance:

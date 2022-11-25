@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
-from CreateVnfRequest import CreateVnfRequest
-from VnfInstance import VnfInstance
+from src.CreateVnfRequest import CreateVnfRequest
+from src.VnfInstance import VnfInstance
 
 class StateMachine(ABC):
     """

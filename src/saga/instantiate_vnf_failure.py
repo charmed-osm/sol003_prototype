@@ -1,18 +1,20 @@
 import asyncio
 from pprint import pprint
 from src.saga.sagas.sagas import SagaBuilder
-from src import VnfInstance
+from src.VnfInstance import VnfInstance
 import logging
-from src.request_objects import create_vnf_request, vnf_instance, vnf_lcm_op_occs
+from request_objects import create_vnf_request, vnf_instance, vnf_lcm_op_occs
+
+
+class RequestVnfCreateException(Exception):
+    pass
+
+
+class RequestInstantiateVnfException(Exception):
+    pass
 
 
 class SagaStateMachine:
-
-    logger = logging
-    logger.basicConfig(
-        level=logging.DEBUG, format="%(asctime)s:%(levelname)s:%(name)s:%(message)s"
-    )
-
     def request_create_vnf(self, create_vnf_request: object) -> VnfInstance:
         """
 
@@ -23,9 +25,9 @@ class SagaStateMachine:
 
             object: VNF instance (5.5.2.2).
         """
-        self.logger.debug("request_create_vnf method called")
+        logging.debug("request_create_vnf method called")
         vnf_instance.id = "VNF_ID_1"
-        return vnf_instance
+        raise RequestVnfCreateException
 
     def rollback_create_vnf(self, instance: object) -> None:
         """
@@ -33,7 +35,7 @@ class SagaStateMachine:
         Args:
             instance: (5.5.2.2).
         """
-        self.logger.debug("rollback_create_vnf called")
+        logging.debug("rollback_create_vnf called")
         del instance
 
     def request_instantiate_vnf(
@@ -49,19 +51,19 @@ class SagaStateMachine:
             str: Response code.
             str: VNF lifecycle operation occurrence ID (VnfLcmOpOcc ID).
         """
-        self.logger.debug("request_instantiate_vnf method called")
+        logging.debug("request_instantiate_vnf method called")
         vnf_lcm_op_occs.vnfInstanceId = (vnf_id,)
         vnf_lcm_op_occs.id = "OPP_ID_1"
         vnf_lcm_op_occs.operationState = "COMPLETED"
 
-        return 200, vnf_lcm_op_occs.id
+        raise RequestInstantiateVnfException
 
     def rollback_instantiate_vnf(self, vnf_lcm_opp_occs: object) -> None:
         """
         Args:
             vnf_lcm_opp_occs (object): VNF lifecycle operation occurrence
         """
-        self.logger.debug("rollback_instantiate_vnf method called")
+        logging.debug("rollback_instantiate_vnf method called")
 
         self._set_status_rollback_lcm_op_occs(vnf_lcm_opp_occs)
 
@@ -74,7 +76,7 @@ class SagaStateMachine:
         Returns:
             dict: VNF lifecycle operation occurrence status information (5.5.2.13).
         """
-        self.logger.debug("get_vnf_lcm_op_occs method called")
+        logging.debug("get_vnf_lcm_op_occs method called")
         return dict(
             (item, getattr(vnf_lcm_op_occs, item))
             for item in dir(vnf_lcm_op_occs)
@@ -104,10 +106,11 @@ if __name__ == "__main__":
         .add_step(
             lambda: sg_vnf_instantiate.request_instantiate_vnf(vnf_instance.id, {}),
             lambda: sg_vnf_instantiate.rollback_instantiate_vnf(vnf_lcm_op_occs),
+            retry=2,
         )
         .build()
     )
-    asyncio.run(saga.run(exceptions=()))
-    sg_vnf_instantiate.logger.debug(
-        pprint(sg_vnf_instantiate.get_vnf_lcm_op_occs(vnf_lcm_op_occs.id))
+    asyncio.run(
+        saga.run(exceptions=(RequestInstantiateVnfException, RequestVnfCreateException))
     )
+    logging.debug(pprint(sg_vnf_instantiate.get_vnf_lcm_op_occs(vnf_lcm_op_occs.id)))

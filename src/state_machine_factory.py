@@ -1,13 +1,13 @@
-from saga_state_machine import SagaStateMachine
-from state_pattern_state_machine import StatePatternStateMachine
-from temporal_state_machine import TemporalStateMachine
+from src.saga_state_machine import SagaStateMachine
+from src.state_pattern_state_machine import StatePatternStateMachine
+from src.temporal_state_machine import TemporalStateMachine
 
 
 class StateMachineFactory:
     def __init__(self):
         self._state_machines = {
-            "temporal": TemporalStateMachine,
             "saga": SagaStateMachine,
+            "temporal": TemporalStateMachine,
             "state": StatePatternStateMachine,
         }
 

@@ -1,8 +1,5 @@
 import unittest
-from state_machine_factory import StateMachineFactory
-from saga_state_machine import SagaStateMachine
-from state_pattern_state_machine import StatePatternStateMachine
-from temporal_state_machine import TemporalStateMachine
+from src import StateMachineFactory, SagaStateMachine, StatePatternStateMachine, TemporalStateMachine
 
 
 class TestStateMachineFactory(unittest.TestCase):

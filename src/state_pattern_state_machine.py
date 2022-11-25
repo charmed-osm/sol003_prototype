@@ -1,4 +1,4 @@
-from state_machine import StateMachine
+from src.state_machine import StateMachine
 
 
 class StatePatternStateMachine(StateMachine):

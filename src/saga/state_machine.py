@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 
 class StateMachine(ABC):
     """
-        Abstract class defining the methods of a state machine.
+    Abstract class defining the methods of a state machine.
     """
 
     @abstractmethod

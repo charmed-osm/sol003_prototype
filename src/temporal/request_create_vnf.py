@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from temporalio import workflow, activity
-from CreateVnfRequest import CreateVnfRequest
-from VnfInstance import VnfInstance, InstantiatedVnfInfo
+from src.CreateVnfRequest import CreateVnfRequest
+from src.VnfInstance import VnfInstance, InstantiatedVnfInfo
 
 @activity.defn
 async def request_create_vnf(vnfRequest: CreateVnfRequest) -> VnfInstance:
