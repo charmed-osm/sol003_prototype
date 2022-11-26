@@ -14,9 +14,7 @@ class SagaStateMachine(StateMachine):
         """
         return (None, None)
 
-    def request_instantiate_vnf(
-        self, vnf_id: str, instantiate_vnf_request: dict
-    ) -> (str, str):
+    def request_instantiate_vnf(self, vnf_id: str, instantiate_vnf_request: dict) -> (str, str):
         """
 
         Args:

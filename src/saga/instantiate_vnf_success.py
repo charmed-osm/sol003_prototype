@@ -1,6 +1,6 @@
 import asyncio
 from pprint import pprint
-from src.saga.sagas.sagas import SagaBuilder
+from src.saga.sagas import SagaBuilder
 from src.VnfInstance import VnfInstance
 import logging
 from request_objects import create_vnf_request, vnf_instance, vnf_lcm_op_occs
@@ -36,9 +36,7 @@ class SagaStateMachine:
         self.logger.debug("rollback_create_vnf called")
         del instance
 
-    def request_instantiate_vnf(
-        self, vnf_id: str, instantiate_vnf_request: dict
-    ) -> (str, str):
+    def request_instantiate_vnf(self, vnf_id: str, instantiate_vnf_request: dict) -> (str, str):
         """
 
         Args:

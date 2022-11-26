@@ -1,6 +1,6 @@
 import asyncio
 from pprint import pprint
-from src.saga.sagas.sagas import SagaBuilder
+from src.saga.sagas import SagaBuilder
 from src.VnfInstance import VnfInstance
 import logging
 from request_objects import create_vnf_request, vnf_instance, vnf_lcm_op_occs
@@ -38,9 +38,7 @@ class SagaStateMachine:
         logging.debug("rollback_create_vnf called")
         del instance
 
-    def request_instantiate_vnf(
-        self, vnf_id: str, instantiate_vnf_request: dict
-    ) -> (str, str):
+    def request_instantiate_vnf(self, vnf_id: str, instantiate_vnf_request: dict) -> (str, str):
         """
 
         Args:
@@ -110,7 +108,5 @@ if __name__ == "__main__":
         )
         .build()
     )
-    asyncio.run(
-        saga.run(exceptions=(RequestInstantiateVnfException, RequestVnfCreateException))
-    )
+    asyncio.run(saga.run(exceptions=(RequestInstantiateVnfException, RequestVnfCreateException)))
     logging.debug(pprint(sg_vnf_instantiate.get_vnf_lcm_op_occs(vnf_lcm_op_occs.id)))

@@ -1,5 +1,10 @@
 import unittest
-from src import StateMachineFactory, SagaStateMachine, StatePatternStateMachine, TemporalStateMachine
+from src import (
+    StateMachineFactory,
+    SagaStateMachine,
+    StatePatternStateMachine,
+    TemporalStateMachine,
+)
 
 
 class TestStateMachineFactory(unittest.TestCase):
