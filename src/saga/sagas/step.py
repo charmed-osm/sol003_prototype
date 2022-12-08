@@ -28,13 +28,7 @@ class Step(BaseStep):
             self.compensation = compensation
         super().__init__()
 
-    async def _handle_retry(self, error, *args, **kwargs):
-        if not self.retry:
-            self._state = State.FAILED
-            raise error
-
-        self._state = State.FAILED_TEMP
-
+    async def handle_retry(self, *args, **kwargs):
         try:
             while self.retry > 0:
                 try:
@@ -49,6 +43,7 @@ class Step(BaseStep):
                 self._state = State.FAILED
 
         except Exception as retry_eror:
+            self._state = State.FAILED
             raise retry_eror
 
     async def do_run(self, *args, **kwargs):
@@ -59,7 +54,13 @@ class Step(BaseStep):
             return res
 
         except Exception as error:
-            return await self._handle_retry(error, *args, **kwargs)
+            if self.retry:
+                self._state = State.FAILED_TEMP
+            else:
+                self._state = State.FAILED
+                raise error
+
+
 
     async def do_rollback(self, *args, **kwargs):
         self._state = State.ROLLING_BACK

@@ -54,7 +54,7 @@ class SagaStateMachine:
         vnf_lcm_op_occs.id = "OPP_ID_1"
         vnf_lcm_op_occs.operationState = "COMPLETED"
 
-        raise RequestInstantiateVnfException
+        return 200, vnf_lcm_op_occs.id
 
     def rollback_instantiate_vnf(self, vnf_lcm_opp_occs: object) -> None:
         """

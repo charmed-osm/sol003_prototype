@@ -4,7 +4,7 @@ from .states import State, StepStates
 from .step import Step
 from typing import List
 import logging
-from pprint import pprint
+
 
 
 class Saga(StepStates):
@@ -17,14 +17,21 @@ class Saga(StepStates):
         self.steps = steps
         super().__init__()
 
+    def _failure(self):
+        return any([step.failure for step in self.steps])
+
     async def run(self, *args, executor=None, exceptions=None, **kwargs):
-        futures = [step.do_run(*args, **kwargs) for step in self.steps]
-        await do_gather(*futures, cancel_exc=(exceptions))
-        failure = any([step.failure for step in self.steps])
-        if failure:
-            futures = [step.do_rollback(*args, **kwargs) for step in self.steps if step.processed]
-            await do_gather(*futures, cancel_exc=(exceptions))
-        self._state = State.FAILED if failure else State.COMPLETED
+        self._state = State.PROCESSING
+        run_futures = [step.do_run(*args, **kwargs) for step in self.steps]
+        await do_gather(*run_futures, allowed_exc=(exceptions))
+        self._state = State.FAILED_TEMP if self._failure() else State.COMPLETED
+        if self._failure():
+            retry_futures = [step.handle_retry(*args, **kwargs) for step in self.steps]
+            await do_gather(*retry_futures, allowed_exc=(exceptions))
+            self._state = State.FAILED if self._failure() else State.COMPLETED
+            if self._failure():
+                rollback_futures = [step.do_rollback(*args, **kwargs) for step in self.steps if step.processed]
+                await do_gather(*rollback_futures, allowed_exc=(exceptions))
         logging.debug(self._state)
 
 
